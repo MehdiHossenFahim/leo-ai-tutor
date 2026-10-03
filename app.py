@@ -110,8 +110,12 @@ st.markdown(
         color: transparent !important;
     }
     
-    /* Create our animated pseudo-element */
-    div[data-testid="stTextInput"] div[data-baseweb="input"]::before {
+    /* Create our animated pseudo-element on the input's direct parent */
+    div[data-testid="stTextInput"] div:has(> input) {
+        position: relative;
+    }
+    
+    div[data-testid="stTextInput"] div:has(> input)::before {
         content: "e.g. How does recursion work?";
         position: absolute;
         left: 14px;
@@ -122,11 +126,12 @@ st.markdown(
         animation: fadeSwap 12s infinite;
         font-family: inherit;
         font-size: 1rem;
+        z-index: 10;
     }
     
     /* Hide when focused or when user has typed (has value) */
-    div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within::before,
-    div[data-testid="stTextInput"] div[data-baseweb="input"]:has(input:not(:placeholder-shown))::before {
+    div[data-testid="stTextInput"] div:has(> input:focus)::before,
+    div[data-testid="stTextInput"] div:has(> input:not(:placeholder-shown))::before {
         display: none !important;
     }
     
