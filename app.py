@@ -105,17 +105,17 @@ st.title("Leo — AI Study Assistant")
 st.markdown(
     """
     <style>
-    /* Hide the real placeholder */
-    div[data-testid="stTextInput"] input::placeholder {
+    /* Hide the real placeholder for the main topic input only */
+    div[data-testid="stTextInput"] input[aria-label="What do you want to learn?"]::placeholder {
         color: transparent !important;
     }
     
     /* Create our animated pseudo-element on the input's direct parent */
-    div[data-testid="stTextInput"] div:has(> input) {
+    div[data-testid="stTextInput"] div:has(> input[aria-label="What do you want to learn?"]) {
         position: relative;
     }
     
-    div[data-testid="stTextInput"] div:has(> input)::before {
+    div[data-testid="stTextInput"] div:has(> input[aria-label="What do you want to learn?"])::before {
         content: "e.g. How does recursion work?";
         position: absolute;
         left: 14px;
@@ -130,8 +130,8 @@ st.markdown(
     }
     
     /* Hide when focused or when user has typed (has value) */
-    div[data-testid="stTextInput"] div:has(> input:focus)::before,
-    div[data-testid="stTextInput"] div:has(> input:not(:placeholder-shown))::before {
+    div[data-testid="stTextInput"] div:has(> input[aria-label="What do you want to learn?"]:focus)::before,
+    div[data-testid="stTextInput"] div:has(> input[aria-label="What do you want to learn?"]:not(:placeholder-shown))::before {
         display: none !important;
     }
     
