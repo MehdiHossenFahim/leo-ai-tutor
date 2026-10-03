@@ -14,9 +14,14 @@ def build_agents(llm) -> dict:
 
 def make_task(key: str, agent: Agent, context=None, output=None) -> Task:
     desc, expected = P.TASKS[key]
+    
+    if output:
+        # Inject schema manually to avoid CrewAI triggering tool-calling (which crashes Groq's gpt-oss-120b endpoint)
+        schema_str = output.model_json_schema()
+        import json
+        expected += f"\n\nYou MUST return raw valid JSON exactly matching this schema:\n{json.dumps(schema_str, indent=2)}\nDo NOT wrap it in ```json blocks or any other text."
+        
     kwargs = dict(description=desc, expected_output=expected, agent=agent)
     if context:
         kwargs["context"] = context
-    if output:
-        kwargs["output_pydantic"] = output
     return Task(**kwargs)

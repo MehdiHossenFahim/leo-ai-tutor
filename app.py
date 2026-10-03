@@ -101,68 +101,59 @@ def run(label, fn):
 
 st.title("Leo — AI Study Assistant")
 
-# JS for typewriter placeholder animation
-import streamlit.components.v1 as components
-components.html(
+# Pure CSS animated placeholder
+st.markdown(
     """
-    <script>
-    const prompts = [
-        "e.g. How does recursion work?",
-        "e.g. Explain quantum mechanics",
-        "e.g. What caused the fall of Rome?",
-        "e.g. How do neural networks learn?",
-        "e.g. Teach me about photosynthesis"
-    ];
-    let promptIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function typeWriter() {
-        const inputs = window.parent.document.querySelectorAll('input[type="text"]');
-        let input = null;
-        for (let i = 0; i < inputs.length; i++) {
-            if (inputs[i].placeholder && inputs[i].placeholder.startsWith("e.g.")) {
-                input = inputs[i];
-                break;
-            }
-        }
-        
-        if (!input) {
-            setTimeout(typeWriter, 500);
-            return;
-        }
-
-        const currentPrompt = prompts[promptIndex];
-        
-        if (isDeleting) {
-            input.placeholder = currentPrompt.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            input.placeholder = currentPrompt.substring(0, charIndex + 1);
-            charIndex++;
-        }
-        
-        let typingSpeed = 70;
-        if (isDeleting) typingSpeed /= 2;
-        
-        if (!isDeleting && charIndex === currentPrompt.length) {
-            typingSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            promptIndex = (promptIndex + 1) % prompts.length;
-            typingSpeed = 500;
-        }
-        
-        setTimeout(typeWriter, typingSpeed);
+    <style>
+    /* Hide the real placeholder */
+    div[data-testid="stTextInput"] input::placeholder {
+        color: transparent !important;
     }
     
-    // Start animation
-    setTimeout(typeWriter, 1000);
-    </script>
+    /* Create our animated pseudo-element */
+    div[data-testid="stTextInput"] div[data-baseweb="input"]::before {
+        content: "e.g. How does recursion work?";
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        pointer-events: none;
+        animation: fadeSwap 12s infinite;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+    
+    /* Hide when focused or when user has typed (has value) */
+    div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within::before,
+    div[data-testid="stTextInput"] div[data-baseweb="input"]:has(input:not(:placeholder-shown))::before {
+        display: none !important;
+    }
+    
+    @keyframes fadeSwap {
+        0%   { opacity: 0; content: "e.g. How does recursion work?"; }
+        5%   { opacity: 1; content: "e.g. How does recursion work?"; }
+        20%  { opacity: 1; content: "e.g. How does recursion work?"; }
+        25%  { opacity: 0; content: "e.g. How does recursion work?"; }
+        
+        26%  { opacity: 0; content: "e.g. Explain quantum mechanics"; }
+        30%  { opacity: 1; content: "e.g. Explain quantum mechanics"; }
+        45%  { opacity: 1; content: "e.g. Explain quantum mechanics"; }
+        50%  { opacity: 0; content: "e.g. Explain quantum mechanics"; }
+        
+        51%  { opacity: 0; content: "e.g. What caused the fall of Rome?"; }
+        55%  { opacity: 1; content: "e.g. What caused the fall of Rome?"; }
+        70%  { opacity: 1; content: "e.g. What caused the fall of Rome?"; }
+        75%  { opacity: 0; content: "e.g. What caused the fall of Rome?"; }
+        
+        76%  { opacity: 0; content: "e.g. How do neural networks learn?"; }
+        80%  { opacity: 1; content: "e.g. How do neural networks learn?"; }
+        95%  { opacity: 1; content: "e.g. How do neural networks learn?"; }
+        100% { opacity: 0; content: "e.g. How do neural networks learn?"; }
+    }
+    </style>
     """,
-    height=0,
-    width=0,
+    unsafe_allow_html=True
 )
 
 # ---------------- stage machine ----------------
