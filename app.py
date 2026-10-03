@@ -101,6 +101,70 @@ def run(label, fn):
 
 st.title("Leo — AI Study Assistant")
 
+# JS for typewriter placeholder animation
+import streamlit.components.v1 as components
+components.html(
+    """
+    <script>
+    const prompts = [
+        "e.g. How does recursion work?",
+        "e.g. Explain quantum mechanics",
+        "e.g. What caused the fall of Rome?",
+        "e.g. How do neural networks learn?",
+        "e.g. Teach me about photosynthesis"
+    ];
+    let promptIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeWriter() {
+        const inputs = window.parent.document.querySelectorAll('input[type="text"]');
+        let input = null;
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].placeholder && inputs[i].placeholder.startsWith("e.g.")) {
+                input = inputs[i];
+                break;
+            }
+        }
+        
+        if (!input) {
+            setTimeout(typeWriter, 500);
+            return;
+        }
+
+        const currentPrompt = prompts[promptIndex];
+        
+        if (isDeleting) {
+            input.placeholder = currentPrompt.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            input.placeholder = currentPrompt.substring(0, charIndex + 1);
+            charIndex++;
+        }
+        
+        let typingSpeed = 70;
+        if (isDeleting) typingSpeed /= 2;
+        
+        if (!isDeleting && charIndex === currentPrompt.length) {
+            typingSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            promptIndex = (promptIndex + 1) % prompts.length;
+            typingSpeed = 500;
+        }
+        
+        setTimeout(typeWriter, typingSpeed);
+    }
+    
+    // Start animation
+    setTimeout(typeWriter, 1000);
+    </script>
+    """,
+    height=0,
+    width=0,
+)
+
 # ---------------- stage machine ----------------
 if ss.stage in ("start", "clarify"):
     if ss.stage == "clarify":
