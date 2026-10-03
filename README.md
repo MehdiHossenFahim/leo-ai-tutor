@@ -89,4 +89,4 @@ You can change the underlying model by modifying the `LEO_MODEL` in your `.env` 
 
 ## Author
 
-(Mehedi Hossen Fahim)[https://www.linkedin.com/in/mehedihossenfahim/]
+[Mehedi Hossen Fahim](https://www.linkedin.com/in/mehedihossenfahim/)
