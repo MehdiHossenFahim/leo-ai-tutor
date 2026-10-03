@@ -1,6 +1,7 @@
 # Leo - Multi-Agent AI Tutor
 
 [![Try it on Streamlit](https://img.shields.io/badge/Try%20it%20on-Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://leo-ai-tutor.streamlit.app/)
+[![Watch Demo](https://img.shields.io/badge/Watch-Demo-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/file/d/1jTT16EThhXd1ocoeHnILOf2EmcrIMgfO/view?usp=sharing)
 
 Leo is a study assistant built with CrewAI where four specialized agents collaborate to teach you. They work together to plan a lesson, explain concepts, give a quiz, grade your answers, and even re-teach weak spots before wrapping up. You interact with them through a Streamlit interface that shows you exactly which agent is currently working.
 
